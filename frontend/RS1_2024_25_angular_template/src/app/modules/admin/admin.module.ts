@@ -9,7 +9,7 @@ import {ReservationComponent} from './reservation/reservation.component';
 import {AdminErrorPageComponent} from './admin-error-page/admin-error-page.component';
 import {Cities1Component} from './cities1/cities1.component';
 import {Cities1EditComponent} from './cities1/cities1-edit/cities1-edit.component';
-import {FormsModule} from '@angular/forms';
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {SharedModule} from '../shared/shared.module';
 import {Cities2EditComponent} from './cities2/cities2-edit/cities2-edit.component';
 import {Cities2Component} from './cities2/cities2.component';
@@ -44,6 +44,7 @@ import { StudentsComponent } from './students/students.component';
 import { StudentEditComponent } from './students/student-edit/student-edit.component';
 import { StudentSemestersComponent } from './students/student-semesters/student-semesters.component';
 import { StudentSemestersNewComponent } from './students/student-semesters/student-semesters-new/student-semesters-new.component';
+import { MatCheckboxModule } from '@angular/material/checkbox';
 
 
 @NgModule({
@@ -93,6 +94,8 @@ import { StudentSemestersNewComponent } from './students/student-semesters/stude
     MatOption,
     MatCard,
     MatProgressSpinner,
+    MatCheckboxModule,
+    ReactiveFormsModule
     // Omogućava pristup svemu što je eksportovano iz SharedModule
   ],
   providers: []

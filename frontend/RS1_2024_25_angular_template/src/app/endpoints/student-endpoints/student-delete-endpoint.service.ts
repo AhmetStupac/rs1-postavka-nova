@@ -6,12 +6,21 @@ import { MyBaseEndpointAsync } from '../../helper/my-base-endpoint-async.interfa
 @Injectable({
   providedIn: 'root'
 })
-export class StudentDeleteEndpointService implements MyBaseEndpointAsync<number, void> {
+export class StudentDeleteEndpointService implements MyBaseEndpointAsync<StudentDeleteRequest, void> {
   private apiUrl = `${MyConfig.api_address}/students`;
 
   constructor(private httpClient: HttpClient) {}
 
-  handleAsync(id: number) {
-    return this.httpClient.delete<void>(`${this.apiUrl}/${id}`);
+  handleAsync(req: StudentDeleteRequest) {
+    return this.httpClient.delete<void>(this.apiUrl, {
+      body: req
+    });
   }
+  
+}
+
+export interface StudentDeleteRequest
+{
+  id: number;
+  deletedById?: number;
 }

@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using RS1_2024_25.API.Data;
 
@@ -11,9 +12,11 @@ using RS1_2024_25.API.Data;
 namespace RS1_2024_25.API.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250825205522_addedTimeDeleted")]
+    partial class addedTimeDeleted
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -233,46 +236,6 @@ namespace RS1_2024_25.API.Migrations
                     b.ToTable("Tenants", (string)null);
                 });
 
-            modelBuilder.Entity("RS1_2024_25.API.Data.Models.SharedTables.YearOfStudy", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<int>("AkademskaGodinaId")
-                        .HasColumnType("int");
-
-                    b.Property<float>("CijenaSkolarine")
-                        .HasColumnType("real");
-
-                    b.Property<DateTime>("DatumUpisa")
-                        .HasColumnType("datetime2");
-
-                    b.Property<int>("GodinaStudija")
-                        .HasColumnType("int");
-
-                    b.Property<bool>("Obnova")
-                        .HasColumnType("bit");
-
-                    b.Property<int>("SnimioId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("StudentId")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("AkademskaGodinaId");
-
-                    b.HasIndex("SnimioId");
-
-                    b.HasIndex("StudentId");
-
-                    b.ToTable("YearOfStudies", (string)null);
-                });
-
             modelBuilder.Entity("RS1_2024_25.API.Data.Models.TenantSpecificTables.Modul1_Auth.MyAppUser", b =>
                 {
                     b.Property<int>("ID")
@@ -465,9 +428,6 @@ namespace RS1_2024_25.API.Migrations
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("datetime2");
 
-                    b.Property<int?>("DeletedById")
-                        .HasColumnType("int");
-
                     b.Property<int>("Gender")
                         .HasColumnType("int");
 
@@ -504,8 +464,6 @@ namespace RS1_2024_25.API.Migrations
                     b.HasIndex("BirthMunicipalityId");
 
                     b.HasIndex("CitizenshipId");
-
-                    b.HasIndex("DeletedById");
 
                     b.HasIndex("PermanentMunicipalityId");
 
@@ -566,33 +524,6 @@ namespace RS1_2024_25.API.Migrations
                         .IsRequired();
 
                     b.Navigation("Country");
-                });
-
-            modelBuilder.Entity("RS1_2024_25.API.Data.Models.SharedTables.YearOfStudy", b =>
-                {
-                    b.HasOne("RS1_2024_25.API.Data.Models.SharedTables.AcademicYear", "AkademskaGodina")
-                        .WithMany()
-                        .HasForeignKey("AkademskaGodinaId")
-                        .OnDelete(DeleteBehavior.NoAction)
-                        .IsRequired();
-
-                    b.HasOne("RS1_2024_25.API.Data.Models.TenantSpecificTables.Modul1_Auth.MyAppUser", "Snimio")
-                        .WithMany()
-                        .HasForeignKey("SnimioId")
-                        .OnDelete(DeleteBehavior.NoAction)
-                        .IsRequired();
-
-                    b.HasOne("RS1_2024_25.API.Data.Models.TenantSpecificTables.Modul2_Basic.Student", "Student")
-                        .WithMany()
-                        .HasForeignKey("StudentId")
-                        .OnDelete(DeleteBehavior.NoAction)
-                        .IsRequired();
-
-                    b.Navigation("AkademskaGodina");
-
-                    b.Navigation("Snimio");
-
-                    b.Navigation("Student");
                 });
 
             modelBuilder.Entity("RS1_2024_25.API.Data.Models.TenantSpecificTables.Modul1_Auth.MyAppUser", b =>
@@ -667,11 +598,6 @@ namespace RS1_2024_25.API.Migrations
                         .HasForeignKey("CitizenshipId")
                         .OnDelete(DeleteBehavior.NoAction);
 
-                    b.HasOne("RS1_2024_25.API.Data.Models.TenantSpecificTables.Modul1_Auth.MyAppUser", "DeletedBy")
-                        .WithMany()
-                        .HasForeignKey("DeletedById")
-                        .OnDelete(DeleteBehavior.NoAction);
-
                     b.HasOne("RS1_2024_25.API.Data.Models.SharedTables.Municipality", "PermanentMunicipality")
                         .WithMany()
                         .HasForeignKey("PermanentMunicipalityId")
@@ -692,8 +618,6 @@ namespace RS1_2024_25.API.Migrations
                     b.Navigation("BirthMunicipality");
 
                     b.Navigation("Citizenship");
-
-                    b.Navigation("DeletedBy");
 
                     b.Navigation("PermanentMunicipality");
 

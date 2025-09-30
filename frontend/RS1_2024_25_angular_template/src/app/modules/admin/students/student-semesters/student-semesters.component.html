@@ -1,1 +1,50 @@
-<p>student-semesters works!</p>
+
+<h2>Student ID : {{student?.id}}</h2>
+<h2>Student Name: {{student?.firstName}}</h2>
+<h2>Student Last Name: {{student?.lastName}}</h2>
+
+<button (click)="goToNewSemester()">
+  Enroll in new semester
+</button>
+
+
+<table [dataSource]="dataSource!" class="mat-elevation-z8" mat-table matSort>
+
+  <!-- Name Column -->
+  <ng-container matColumnDef="id">
+    <mat-header-cell *matHeaderCellDef mat-sort-header>Id</mat-header-cell>
+    <mat-cell *matCellDef="let city">{{ city.id }}</mat-cell>
+  </ng-container>
+
+  <!-- Region Name Column -->
+  <ng-container matColumnDef="akademskaGodina">
+    <mat-header-cell *matHeaderCellDef mat-sort-header>Academic Year</mat-header-cell>
+    <mat-cell *matCellDef="let city">{{ city.akademskaGodina }}</mat-cell>
+  </ng-container>
+
+  <!-- Country Name Column -->
+  <ng-container matColumnDef="godinaStudija">
+    <mat-header-cell *matHeaderCellDef mat-sort-header>Year of Study</mat-header-cell>
+    <mat-cell *matCellDef="let city">{{ city.godinaStudija }}</mat-cell>
+  </ng-container>
+
+    <ng-container matColumnDef="obnova">
+    <mat-header-cell *matHeaderCellDef mat-sort-header>Renewal</mat-header-cell>
+    <mat-cell *matCellDef="let city">{{ city.obnova }}</mat-cell>
+  </ng-container>
+
+    <ng-container matColumnDef="datumUpisa">
+    <mat-header-cell *matHeaderCellDef mat-sort-header>Winter Semester</mat-header-cell>
+    <mat-cell *matCellDef="let city">{{ city.datumUpisa }}</mat-cell>
+  </ng-container>
+
+    <ng-container matColumnDef="snimio">
+    <mat-header-cell *matHeaderCellDef mat-sort-header>Recorded by</mat-header-cell>
+    <mat-cell *matCellDef="let city">{{ city.snimio }}</mat-cell>
+  </ng-container>
+
+
+  <!-- Table Header and Rows -->
+  <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+  <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+</table>

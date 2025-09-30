@@ -20,7 +20,7 @@ public class StudentGetAllEndpoint(ApplicationDbContext db) : MyEndpointBaseAsyn
     {
         // Osnovni upit za studente
         var query = db.Students
-                   .Where(s => !s.IsDeleted)
+            .Include(s=> s.DeletedBy)
                    .AsQueryable();
 
         // Primjena filtera po imenu, prezimenu, student broju ili državi
@@ -30,7 +30,8 @@ public class StudentGetAllEndpoint(ApplicationDbContext db) : MyEndpointBaseAsyn
                 s.User.FirstName.Contains(request.Q) ||
                 s.User.LastName.Contains(request.Q) ||
                 s.StudentNumber.Contains(request.Q) ||
-                (s.Citizenship != null && s.Citizenship.Name.Contains(request.Q))
+                (s.Citizenship != null && s.Citizenship.Name.Contains(request.Q)) || 
+                s.DeletedBy.Email.Contains(request.Q)
             );
         }
 
@@ -43,6 +44,9 @@ public class StudentGetAllEndpoint(ApplicationDbContext db) : MyEndpointBaseAsyn
             StudentNumber = s.StudentNumber,
             Citizenship = s.Citizenship != null ? s.Citizenship.Name : null,
             BirthMunicipality = s.BirthMunicipality != null ? s.BirthMunicipality.Name : null,
+            IsDeleted = s.IsDeleted,
+            TimeDeleted = s.TimeDeleted,
+            DeletedBy = s.DeletedBy.Email
         });
 
         // Kreiranje paginiranog rezultata
@@ -66,5 +70,8 @@ public class StudentGetAllEndpoint(ApplicationDbContext db) : MyEndpointBaseAsyn
         public required string StudentNumber { get; set; }
         public string? Citizenship { get; set; }
         public string? BirthMunicipality { get; set; }
+        public bool IsDeleted { get; set; }
+        public DateTime? TimeDeleted { get; set; }
+        public string? DeletedBy { get; set; }
     }
 }
